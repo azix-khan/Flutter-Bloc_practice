@@ -8,6 +8,7 @@ abstract class SwitchEvent extends Equatable {
 
 class EnableOrDisableNotification extends SwitchEvent {}
 
+// ignore: must_be_immutable
 class SliderEvent extends SwitchEvent {
   double slider;
   SliderEvent({required this.slider});
