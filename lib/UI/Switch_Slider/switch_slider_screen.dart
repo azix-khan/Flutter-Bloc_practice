@@ -16,7 +16,7 @@ class _SwitchSliderScreenState extends State<SwitchSliderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("switch and slider example"),
+        title: const Text("Switch & Slider Example"),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
