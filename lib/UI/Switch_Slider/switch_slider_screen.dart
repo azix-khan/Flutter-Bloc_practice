@@ -28,19 +28,42 @@ class _SwitchSliderScreenState extends State<SwitchSliderScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text("Notification"),
-                BlocBuilder<SwitchBloc, SwitchStates>(
-                    buildWhen: (previous, current) =>
-                        previous.isSwitch != current.isSwitch,
-                    builder: (context, state) {
-                      return Switch(
-                          value: state.isSwitch,
-                          onChanged: (newValue) {
-                            print("Notification");
-                            context
-                                .read<SwitchBloc>()
-                                .add(EnableOrDisableNotification());
-                          });
-                    }),
+                //---> used when it is necessary to both rebuild UI and execute other reactions to state changes in the bloc
+
+                BlocConsumer<SwitchBloc, SwitchStates>(
+                    listener: (context, state) {
+                  if (state.isSwitch == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Switched is On")));
+                  } else if (state.isSwitch == false) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Switched is Off")));
+                  }
+                }, builder: (context, state) {
+                  return Switch(
+                      value: state.isSwitch,
+                      onChanged: (newValue) {
+                        print("Notification");
+                        context
+                            .read<SwitchBloc>()
+                            .add(EnableOrDisableNotification());
+                      });
+                }),
+
+                //---> used when we want to draw a Widget based on what is the current State
+                // BlocBuilder<SwitchBloc, SwitchStates>(
+                //     buildWhen: (previous, current) =>
+                //         previous.isSwitch != current.isSwitch,
+                //     builder: (context, state) {
+                //       return Switch(
+                //           value: state.isSwitch,
+                //           onChanged: (newValue) {
+                //             print("Notification");
+                //             context
+                //                 .read<SwitchBloc>()
+                //                 .add(EnableOrDisableNotification());
+                //           });
+                //     }),
               ],
             ),
             const SizedBox(
